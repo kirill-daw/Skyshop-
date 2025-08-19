@@ -1,0 +1,93 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# Лог-файлы
+logs/
+*.log
+
+# Конфигурационные файлы разработчика
+application.properties
+application.yml
+application.yaml
+bootstrap.properties
+bootstrap.yml
+bootstrap.yaml
+
+# Временные и промежуточные файлы
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+
+# Бинарные артефакты от компилятора
+**/*.out
+**/*.o
+**/*.obj
+**/*.so
+**/*.dll
+**/*.exe
+**/*.pyc
+**/*.pyd
+**/*.pdb
+**/*.lib
+**/*.a
+**/*.la
+**/*.lo
+
+# Конфиденциальные ключи и токены
+.keystore
+.truststore
+jks/*
+keytab/*
+
+# Логи Hibernate/Spring Data JPA
+hibernate.log
+spring-data-jpa.log
+
+# Папка Gradle/Maven локальных зависимостей
+.mvn/
+mvnw*
+.gradle/
+gradlew*
+
+# Директории сборки
+build/
+bin/
+dist/
+tmp/
