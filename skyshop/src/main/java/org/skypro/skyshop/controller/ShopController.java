@@ -1,13 +1,16 @@
 package org.skypro.skyshop.controller;
 
 import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.basket.ProductBasket;
+import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.searchresult.SearchResult;
+import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,12 @@ import java.util.UUID;
 public class ShopController {
     private final StorageService storageService = new StorageService();
     private final SearchService searchService = new SearchService(storageService);
+    private final BasketService basketService;
+
+    @Autowired
+    public ShopController(BasketService basketService) {
+        this.basketService = basketService;
+    }
 
     @GetMapping("/products")
     public Map<UUID, Product> getAllProducts() {
@@ -24,7 +33,7 @@ public class ShopController {
     }
 
     @GetMapping("/articles")
-    public  Map<UUID, Article> getAllArticles() {
+    public Map<UUID, Article> getAllArticles() {
         return storageService.getArticles();
     }
 
@@ -32,5 +41,16 @@ public class ShopController {
     public List<SearchResult> search(@RequestParam String pattern) {
         System.out.println("Received pattern: " + pattern);
         return searchService.search(pattern);
+    }
+
+    @PostMapping("/basket/{id}")
+    public String addProduct(@PathVariable("id") UUID id) {
+        basketService.addProduct(id);
+        return "Product added successfully";
+    }
+
+    @GetMapping("/basket")
+    public UserBasket getUserBasket() {
+        return basketService.getUserBasket();
     }
 }

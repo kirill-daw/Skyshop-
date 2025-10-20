@@ -8,10 +8,7 @@ import org.skypro.skyshop.model.product.SimpleProduct;
 import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -88,5 +85,9 @@ public class StorageService {
     public ArrayList<Searchable> searchables() {
         return Stream.concat(products.values().stream(),
                 articles.values().stream()).collect(Collectors.toCollection(ArrayList<Searchable>::new));
+    }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(products.get(id));
     }
 }
