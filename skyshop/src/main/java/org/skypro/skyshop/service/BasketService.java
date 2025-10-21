@@ -24,18 +24,24 @@ public class BasketService {
     public void addProduct(UUID id) {
         Optional<Product> product = storage.getProductById(id);
         if (!product.isPresent()) {
-            throw new IllegalArgumentException("This product is not found");
+            throw new IllegalArgumentException("This product is not found: " + id);
         } else {
             basket.addProduct(id);
         }
     }
 
     public UserBasket getUserBasket() {
-        return new UserBasket(basket.getProductBasket().entrySet().stream()
-                .map(entry ->
-                        new BasketItem(
-                                storage.getProductById(entry.getKey()).orElse(null),
-                                entry.getValue()))
-                .toList());
+        return
+                new UserBasket(basket.getProductBasket()
+                        .entrySet()
+                        .stream()
+                        .map(entry -> {
+                            Product product = storage.getProductById(entry.getKey()).orElseThrow(() ->
+                                    new IllegalArgumentException("This product is not found: " + entry.getKey()));
+                            return new BasketItem(
+                                    product,
+                                    entry.getValue());
+                        })
+                        .toList());
     }
 }
