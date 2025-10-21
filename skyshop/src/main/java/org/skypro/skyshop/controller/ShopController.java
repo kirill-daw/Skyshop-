@@ -1,7 +1,6 @@
 package org.skypro.skyshop.controller;
 
 import org.skypro.skyshop.model.article.Article;
-import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.searchresult.SearchResult;
@@ -11,7 +10,6 @@ import org.skypro.skyshop.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 import java.util.Map;
