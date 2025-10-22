@@ -47,13 +47,9 @@ public class ShopController {
     }
 
     @GetMapping("/basket/{id}")
-    public ResponseEntity<String> addProduct(@PathVariable("id") UUID id) {
-        try {
-            basketService.addProduct(id);
-            return ResponseEntity.ok("Product added successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Failed to add product: " + e.getMessage());
-        }
+    public String addProduct(@PathVariable("id") UUID id) {
+        basketService.addProduct(id);
+        return "Product added successfully";
     }
 
     @GetMapping("/basket")
