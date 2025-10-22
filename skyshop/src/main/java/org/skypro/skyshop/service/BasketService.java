@@ -25,7 +25,7 @@ public class BasketService {
     public void addProduct(UUID id) {
         Optional<Product> product = storage.getProductById(id);
         if (!product.isPresent()) {
-            throw new IllegalArgumentException("This product is not found: " + id);
+            throw new NoSuchProductException();
         } else {
             basket.addProduct(id);
         }
