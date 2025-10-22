@@ -1,13 +1,15 @@
 package org.skypro.skyshop.controller;
 
 import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.basket.UserBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.searchresult.SearchResult;
+import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -15,8 +17,18 @@ import java.util.UUID;
 
 @RestController
 public class ShopController {
-    private final StorageService storageService = new StorageService();
-    private final SearchService searchService = new SearchService(storageService);
+    private final StorageService storageService;
+    private final SearchService searchService;
+    private final BasketService basketService;
+
+    @Autowired
+    public ShopController(StorageService storageService,
+                          SearchService searchService,
+                          BasketService basketService) {
+        this.storageService = storageService;
+        this.searchService = searchService;
+        this.basketService = basketService;
+    }
 
     @GetMapping("/products")
     public Map<UUID, Product> getAllProducts() {
@@ -24,7 +36,7 @@ public class ShopController {
     }
 
     @GetMapping("/articles")
-    public  Map<UUID, Article> getAllArticles() {
+    public Map<UUID, Article> getAllArticles() {
         return storageService.getArticles();
     }
 
@@ -32,5 +44,20 @@ public class ShopController {
     public List<SearchResult> search(@RequestParam String pattern) {
         System.out.println("Received pattern: " + pattern);
         return searchService.search(pattern);
+    }
+
+    @GetMapping("/basket/{id}")
+    public ResponseEntity<String> addProduct(@PathVariable("id") UUID id) {
+        try {
+            basketService.addProduct(id);
+            return ResponseEntity.ok("Product added successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Failed to add product: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/basket")
+    public UserBasket getUserBasket() {
+        return basketService.getUserBasket();
     }
 }
