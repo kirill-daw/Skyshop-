@@ -22,4 +22,8 @@ public class SearchResult {
                 searchable.getContentType(),
                 searchable.getId().toString());
     }
+
+    public String getName() {
+        return name;
+    }
 }
