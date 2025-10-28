@@ -15,4 +15,12 @@ public final class BasketItem {
     public int getTotalPrice() {
         return product.getPrice() * value;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }
